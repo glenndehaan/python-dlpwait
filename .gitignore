@@ -1,0 +1,13 @@
+# PhpStorm
+.idea
+
+# General files
+*~
+*.DS_STORE
+
+# python
+.venv
+
+# pytest
+.coverage
+coverage.xml

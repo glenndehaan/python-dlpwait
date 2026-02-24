@@ -1,0 +1,70 @@
+[project]
+name = "dlpwait"
+version = "1.0.0"
+description = "Asynchronous Python client for Disneyland Paris park data"
+authors = [
+    { name = "Glenn de Haan", email = "glenn@dehaan.cloud" }
+]
+license = { text = "MIT" }
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "aiohttp>=3.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/glenndehaan/python-dlpwait"
+Issues = "https://github.com/glenndehaan/python-dlpwait/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dlpwait"]
+
+[tool.hatch.build.targets.wheel.package-data]
+dlpwait = ["py.typed"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+addopts = [
+    "--strict-markers",
+    "--cov=dlpwait",
+    "--cov-report=term-missing",
+    "--cov-report=xml",
+]
+
+[tool.ruff]
+line-length = 120
+exclude = ["build", ".venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+extend-select = ["B", "D"]
+ignore = [
+    "D203",  # incompatible with D211
+    "D213",  # incompatible with D212
+]
+extend-ignore = []
+
+[tool.pylint."BASIC"]
+good-names = ["JSON"]
+
+[tool.pylint."MESSAGES CONTROL"]
+disable = [
+    "redefined-builtin",
+    "too-many-public-methods",
+]
+
+[tool.mypy]
+python_version = 3.11
+files = "src,dlpwait"
+ignore_missing_imports = true
+strict = true
+disallow_untyped_defs = true
+warn_unused_ignores = true
+warn_return_any = true
+pretty = true
+show_error_codes = true
