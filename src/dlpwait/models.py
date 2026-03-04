@@ -20,4 +20,4 @@ class Park:
     opening_time: datetime
     closing_time: datetime
     attractions: dict[str, str]
-    standby_wait_times: dict[str, int]
+    standby_wait_times: dict[str, int | None]

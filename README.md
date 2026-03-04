@@ -76,13 +76,13 @@ DLPWaitAPI(session: aiohttp.ClientSession | None = None)
 
 #### `Park` Dataclass
 
-| Field                | Type             | Description                                   |
-|----------------------|------------------|-----------------------------------------------|
-| `slug`               | `Parks`          | Park identifier                               |
-| `opening_time`       | `datetime`       | Park opening time                             |
-| `closing_time`       | `datetime`       | Park closing time                             |
-| `attractions`        | `dict[str, str]` | Attraction IDs mapped to names                |
-| `standby_wait_times` | `dict[str, int]` | Attraction IDs mapped to wait times (minutes) |
+| Field                | Type                     | Description                                   |
+|----------------------|--------------------------|-----------------------------------------------|
+| `slug`               | `Parks`                  | Park identifier                               |
+| `opening_time`       | `datetime`               | Park opening time                             |
+| `closing_time`       | `datetime`               | Park closing time                             |
+| `attractions`        | `dict[str, str]`         | Attraction IDs mapped to names                |
+| `standby_wait_times` | `dict[str, int \| None]` | Attraction IDs mapped to wait times (minutes) |
 
 ## Exception Handling
 
