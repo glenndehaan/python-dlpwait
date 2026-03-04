@@ -107,18 +107,15 @@ class DLPWaitAPI:
         result: dict[Parks, dict[str, str]] = {}
 
         for attraction in attractions:
-            if not attraction["active"]:
+            try:
+                slug = Parks(attraction["park"]["slug"])
+            except ValueError:
                 continue
 
             if attraction["hide"]:
                 continue
 
-            if attraction["status"] != "OPERATING":
-                continue
-
-            try:
-                slug = Parks(attraction["park"]["slug"])
-            except ValueError:
+            if attraction["status"] == "UNDEFINED":
                 continue
 
             result.setdefault(slug, {})
@@ -127,23 +124,25 @@ class DLPWaitAPI:
         return result
 
     @staticmethod
-    def _parse_standby_wait_times(attractions: list[JSON]) -> dict[Parks, dict[str, int]]:
+    def _parse_standby_wait_times(attractions: list[JSON]) -> dict[Parks, dict[str, int | None]]:
         """Return park wait times from the API data."""
-        result: dict[Parks, dict[str, int]] = {}
+        result: dict[Parks, dict[str, int | None]] = {}
 
         for attraction in attractions:
-            if not attraction["active"]:
+            try:
+                slug = Parks(attraction["park"]["slug"])
+            except ValueError:
                 continue
 
             if attraction["hide"]:
                 continue
 
-            if attraction["status"] != "OPERATING":
+            if attraction["status"] == "UNDEFINED":
                 continue
 
-            try:
-                slug = Parks(attraction["park"]["slug"])
-            except ValueError:
+            if attraction["status"] != "OPERATING":
+                result.setdefault(slug, {})
+                result[slug][attraction["id"]] = None
                 continue
 
             standby = attraction.get("waitTime", {}).get("standby")

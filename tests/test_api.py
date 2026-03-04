@@ -221,39 +221,6 @@ def test_parse_standby_wait_times_filters_correctly():
 # Additional branch coverage
 # -------------------------
 
-def test_parse_attractions_skips_non_operating():
-    """Ensure non-operating attractions are ignored."""
-    attractions = [
-        {
-            "id": "1",
-            "name": "Closed Ride",
-            "active": True,
-            "hide": False,
-            "status": "DOWN",
-            "park": {"slug": "disneyland-park"},
-        }
-    ]
-
-    result = DLPWaitAPI._parse_attractions(attractions)
-    assert result == {}
-
-
-def test_parse_attractions_skips_inactive():
-    """Ensure inactive attractions are ignored."""
-    attractions = [
-        {
-            "id": "1",
-            "name": "Inactive Ride",
-            "active": False,
-            "hide": False,
-            "status": "OPERATING",
-            "park": {"slug": "disneyland-park"},
-        }
-    ]
-
-    result = DLPWaitAPI._parse_attractions(attractions)
-    assert result == {}
-
 
 def test_parse_attractions_skips_invalid_slug():
     """Ensure attractions with invalid park slugs are ignored."""
@@ -272,20 +239,20 @@ def test_parse_attractions_skips_invalid_slug():
     assert result == {}
 
 
-def test_parse_standby_wait_times_skips_inactive():
-    """Ensure inactive attractions are ignored in standby wait times."""
+def test_parse_attractions_skips_undefined():
+    """Ensure undefined attractions are ignored."""
     attractions = [
         {
             "id": "1",
-            "active": False,
+            "name": "Closed Ride",
+            "active": True,
             "hide": False,
-            "status": "OPERATING",
+            "status": "UNDEFINED",
             "park": {"slug": "disneyland-park"},
-            "waitTime": {"standby": {"minutes": 10}},
         }
     ]
 
-    result = DLPWaitAPI._parse_standby_wait_times(attractions)
+    result = DLPWaitAPI._parse_attractions(attractions)
     assert result == {}
 
 
@@ -306,8 +273,25 @@ def test_parse_standby_wait_times_skips_hidden():
     assert result == {}
 
 
-def test_parse_standby_wait_times_skips_non_operating():
-    """Ensure non-operating attractions are ignored in standby wait times."""
+def test_parse_standby_wait_times_skips_undefined():
+    """Ensure undefined attractions are ignored in standby wait times."""
+    attractions = [
+        {
+            "id": "1",
+            "active": True,
+            "hide": False,
+            "status": "UNDEFINED",
+            "park": {"slug": "disneyland-park"},
+            "waitTime": {"standby": {"minutes": 10}},
+        }
+    ]
+
+    result = DLPWaitAPI._parse_standby_wait_times(attractions)
+    assert result == {}
+
+
+def test_parse_standby_wait_times_non_operating():
+    """Ensure non-operating attractions are show as None in standby wait times."""
     attractions = [
         {
             "id": "1",
@@ -320,7 +304,11 @@ def test_parse_standby_wait_times_skips_non_operating():
     ]
 
     result = DLPWaitAPI._parse_standby_wait_times(attractions)
-    assert result == {}
+    assert result == {
+        Parks.DISNEYLAND: {
+            "1": None
+        }
+    }
 
 
 def test_parse_standby_wait_times_skips_invalid_slug():

@@ -1,6 +1,6 @@
 [project]
 name = "dlpwait"
-version = "1.0.0"
+version = "1.0.1"
 description = "Asynchronous Python client for Disneyland Paris park data"
 authors = [
     { name = "Glenn de Haan", email = "glenn@dehaan.cloud" }
