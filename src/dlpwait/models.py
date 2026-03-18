@@ -9,7 +9,7 @@ class Parks(StrEnum):
     """Parks available within the API."""
 
     DISNEYLAND = "disneyland-park"
-    WALT_DISNEY_STUDIOS = "walt-disney-studios-park"
+    DISNEY_ADVENTURE_WORLD = "disney-adventure-world"
 
 
 @dataclass(kw_only=True, frozen=True)
