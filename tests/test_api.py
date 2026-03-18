@@ -400,7 +400,7 @@ async def test_update_populates_parks():
                     ],
                 },
                 {
-                    "slug": "walt-disney-studios-park",
+                    "slug": "disney-adventure-world",
                     "schedules": [
                         {
                             "status": "OPERATING",
@@ -427,7 +427,7 @@ async def test_update_populates_parks():
                     "active": True,
                     "hide": False,
                     "status": "OPERATING",
-                    "park": {"slug": "walt-disney-studios-park"},
+                    "park": {"slug": "disney-adventure-world"},
                     "waitTime": {"standby": {"minutes": 15}},
                 },
             ],
@@ -444,8 +444,8 @@ async def test_update_populates_parks():
     assert api.parks[Parks.DISNEYLAND].opening_time == datetime(2026, 1, 1, 9, 0, tzinfo=tz)
     assert api.parks[Parks.DISNEYLAND].standby_wait_times["1"] == 20
 
-    assert api.parks[Parks.WALT_DISNEY_STUDIOS].opening_time == datetime(2026, 1, 1, 9, 30, tzinfo=tz)
-    assert api.parks[Parks.WALT_DISNEY_STUDIOS].standby_wait_times["2"] == 15
+    assert api.parks[Parks.DISNEY_ADVENTURE_WORLD].opening_time == datetime(2026, 1, 1, 9, 30, tzinfo=tz)
+    assert api.parks[Parks.DISNEY_ADVENTURE_WORLD].standby_wait_times["2"] == 15
 
 
 @pytest.mark.asyncio

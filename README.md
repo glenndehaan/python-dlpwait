@@ -69,10 +69,10 @@ DLPWaitAPI(session: aiohttp.ClientSession | None = None)
 
 #### `Parks` Enum
 
-| Member                | Description              |
-|-----------------------|--------------------------|
-| `DISNEYLAND`          | Disneyland Park          |
-| `WALT_DISNEY_STUDIOS` | Walt Disney Studios Park |
+| Member                   | Description                 |
+|--------------------------|-----------------------------|
+| `DISNEYLAND`             | Disneyland Park             |
+| `DISNEY_ADVENTURE_WORLD` | Disney Adventure World Park |
 
 #### `Park` Dataclass
 
